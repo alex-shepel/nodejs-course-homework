@@ -1,46 +1,17 @@
 const express = require('express');
-const { contacts } = require('../../../controllers');
+const { contacts: ctrl } = require('../../../controllers');
+const { ctrlWrapper } = require('../../../helpers');
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
-  try {
-    await contacts.getAll(req, res);
-  } catch (error) {
-    next(error);
-  }
-});
+router.get('/', ctrlWrapper(ctrl.getAll));
 
-router.get('/:contactId', async (req, res, next) => {
-  try {
-    await contacts.getById(req, res);
-  } catch (error) {
-    next(error);
-  }
-});
+router.get('/:contactId', ctrlWrapper(ctrl.getById));
 
-router.post('/', async (req, res, next) => {
-  try {
-    await contacts.add(req, res);
-  } catch (error) {
-    next(error);
-  }
-});
+router.post('/', ctrlWrapper(ctrl.add));
 
-router.delete('/:contactId', async (req, res, next) => {
-  try {
-    await contacts.deleteById(req, res);
-  } catch (error) {
-    next(error);
-  }
-});
+router.delete('/:contactId', ctrlWrapper(ctrl.deleteById));
 
-router.put('/:contactId', async (req, res, next) => {
-  try {
-    await contacts.updateById(req, res);
-  } catch (error) {
-    next(error);
-  }
-});
+router.put('/:contactId', ctrlWrapper(ctrl.updateById));
 
 module.exports = router;

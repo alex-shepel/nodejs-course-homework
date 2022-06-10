@@ -12,6 +12,4 @@ const createError = (status, message = Messages[status]) => {
   return error;
 };
 
-module.exports = {
-  createError,
-};
+module.exports = createError;
