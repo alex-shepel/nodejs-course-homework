@@ -7,6 +7,6 @@ const contactSchema = Schema({
   favorite: Boolean,
 });
 
-const Contact = model('book', contactSchema);
+const Contact = model('contact', contactSchema);
 
 module.exports = Contact;
