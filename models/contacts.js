@@ -43,7 +43,7 @@ const removeContact = async contactId => {
  * Adds contact with specified params.
  * Generates new id automatically.
  */
-const addContact = async (body) => {
+const addContact = async body => {
   const contacts = await listContacts();
   const payload = { id: nanoid(), ...body };
   contacts.push(payload);
@@ -58,14 +58,14 @@ const updateContact = async (contactId, body) => {
   const contacts = await listContacts();
   for (let i = 0; i < contacts.length; i += 1) {
     if (contacts[i].id === contactId) {
-      const payload = {...contacts[i], ...body};
+      const payload = { ...contacts[i], ...body };
       contacts.splice(i, 1, payload).at(0);
       await write(contacts);
       return payload;
     }
   }
   return null;
-}
+};
 
 module.exports = {
   listContacts,
@@ -73,4 +73,4 @@ module.exports = {
   removeContact,
   addContact,
   updateContact,
-}
+};
