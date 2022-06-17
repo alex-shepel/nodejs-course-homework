@@ -1,7 +1,7 @@
 const { Schema, model, SchemaTypes } = require('mongoose');
 const Joi = require('joi');
 
-const phoneRegexp = /^\(\d{3}\) \d{3}-\d{4}$/;
+const PHONE_REGEXP = /^\(\d{3}\) \d{3}-\d{4}$/;
 
 const contactSchema = Schema(
   {
@@ -14,7 +14,7 @@ const contactSchema = Schema(
     },
     phone: {
       type: String,
-      match: phoneRegexp,
+      match: PHONE_REGEXP,
     },
     favorite: {
       type: String,
@@ -34,14 +34,14 @@ const contactSchema = Schema(
 const addContact = Joi.object({
   name: Joi.string().required(),
   email: Joi.string(),
-  phone: Joi.string().pattern(phoneRegexp),
+  phone: Joi.string().pattern(PHONE_REGEXP),
   favorite: Joi.boolean(),
 });
 
 const updateContact = Joi.object({
   name: Joi.string(),
   email: Joi.string(),
-  phone: Joi.string().pattern(phoneRegexp),
+  phone: Joi.string().pattern(PHONE_REGEXP),
   favorite: Joi.boolean(),
 });
 

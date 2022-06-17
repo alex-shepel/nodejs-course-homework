@@ -1,32 +1,40 @@
 const { Schema, model } = require('mongoose');
 const Joi = require('joi');
 
-const emailRegexp = /^\S+@\S+\.\S+$/;
-const subscriptionEnum = ['starter', 'pro', 'business'];
+const EMAIL_REGEXP = /^\S+@\S+\.\S+$/;
+const SUBSCRIPTION_ENUM = ['starter', 'pro', 'business'];
+const PASSWORD_LENGTH = 6;
 
-const userSchema = Schema({
-  password: {
-    type: String,
-    required: [true, 'Set password for user'],
+const userSchema = Schema(
+  {
+    password: {
+      type: String,
+      required: [true, 'Set password for user'],
+      minLength: PASSWORD_LENGTH,
+    },
+    email: {
+      type: String,
+      required: [true, 'Email is required'],
+      unique: true,
+      match: EMAIL_REGEXP,
+    },
+    subscription: {
+      type: String,
+      enum: SUBSCRIPTION_ENUM,
+      default: 'starter',
+    },
+    token: String,
   },
-  email: {
-    type: String,
-    required: [true, 'Email is required'],
-    unique: true,
-    match: emailRegexp,
+  {
+    versionKey: false,
+    timestamps: true,
   },
-  subscription: {
-    type: String,
-    enum: subscriptionEnum,
-    default: 'starter',
-  },
-  token: String,
-});
+);
 
 const register = Joi.object({
-  password: Joi.string().required(),
+  password: Joi.string().min(PASSWORD_LENGTH).required(),
   email: Joi.string().required(),
-  subscription: Joi.string().valid(...subscriptionEnum),
+  subscription: Joi.string().valid(...SUBSCRIPTION_ENUM),
 });
 
 const login = Joi.object({
