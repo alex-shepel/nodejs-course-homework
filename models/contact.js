@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, SchemaTypes } = require('mongoose');
 const Joi = require('joi');
 
 const phoneRegexp = /^\(\d{3}\) \d{3}-\d{4}$/;
@@ -19,6 +19,10 @@ const contactSchema = Schema(
     favorite: {
       type: String,
       default: false,
+    },
+    owner: {
+      type: SchemaTypes.ObjectId,
+      ref: 'user',
     },
   },
   {
