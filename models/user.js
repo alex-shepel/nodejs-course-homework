@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const Joi = require('joi');
+const { regexp } = require('../shared');
 
-const EMAIL_REGEXP = /^\S+@\S+\.\S+$/;
 const SUBSCRIPTION_ENUM = ['starter', 'pro', 'business'];
 const PASSWORD_LENGTH = 6;
 
@@ -16,7 +16,7 @@ const userSchema = Schema(
       type: String,
       required: [true, 'Email is required'],
       unique: true,
-      match: EMAIL_REGEXP,
+      match: regexp.EMAIL,
     },
     subscription: {
       type: String,
@@ -33,12 +33,12 @@ const userSchema = Schema(
 
 const register = Joi.object({
   password: Joi.string().min(PASSWORD_LENGTH).required(),
-  email: Joi.string().required(),
+  email: Joi.string().pattern(regexp.EMAIL).required(),
 });
 
 const login = Joi.object({
   password: Joi.string().required(),
-  email: Joi.string().required(),
+  email: Joi.string().pattern(regexp.EMAIL).required(),
 });
 
 const schemas = {
