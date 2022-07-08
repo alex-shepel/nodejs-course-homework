@@ -51,6 +51,10 @@ const register = Joi.object({
   email: Joi.string().pattern(regexp.EMAIL).required(),
 });
 
+const resendVerification = Joi.object({
+  email: Joi.string().pattern(regexp.EMAIL).required(),
+});
+
 const login = Joi.object({
   password: Joi.string().required(),
   email: Joi.string().pattern(regexp.EMAIL).required(),
@@ -59,6 +63,7 @@ const login = Joi.object({
 const schemas = {
   register,
   login,
+  resendVerification,
 };
 
 const User = model('user', userSchema);

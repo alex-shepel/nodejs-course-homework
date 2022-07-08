@@ -1,7 +1,7 @@
 const { User } = require('../../models/user');
 const { createError } = require('../../helpers');
 
-const verifyMail = async (req, res) => {
+const verify = async (req, res) => {
   const { verificationToken } = req.params;
 
   const user = await User.findOne({ verificationToken });
@@ -15,4 +15,4 @@ const verifyMail = async (req, res) => {
   res.send('Successful Verification');
 };
 
-module.exports = verifyMail;
+module.exports = verify;
