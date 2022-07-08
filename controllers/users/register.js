@@ -11,7 +11,8 @@ const register = async (req, res) => {
   const { email, password } = req.body;
 
   const existingUser = await User.findOne({ email });
-  if (existingUser) throw createError(409, 'Email in use');
+  if (existingUser && existingUser.verify)
+    throw createError(409, 'Email in use');
 
   const hashPassword = await bcrypt.hash(password, SALT_LENGTH);
   const avatarURL = gravatar.url(email);
